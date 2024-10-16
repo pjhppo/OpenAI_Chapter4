@@ -3,6 +3,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System;
 
 public class OpenAIManager : MonoBehaviour
 {
@@ -10,7 +11,10 @@ public class OpenAIManager : MonoBehaviour
 
     public string currentPrompt = "answer any question";
     private const string apiUrl = "https://api.openai.com/v1/chat/completions";
-    private const string apiKey = "";
+    public string apiKey;
+
+    //추가된 코드
+    public event Action<string> OnReceivedMessage;
 
     private void Awake()
     {
@@ -77,6 +81,8 @@ public class OpenAIManager : MonoBehaviour
                     string assistantMessage = responseData.choices[0].message.content;
                     resultText.text = assistantMessage;
                     StartCoroutine(NPCManager.Instance.TalkThenIdle());
+                    
+                    OnReceivedMessage?.Invoke(assistantMessage);
                 }
                 else
                 {

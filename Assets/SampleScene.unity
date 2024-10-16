@@ -280,6 +280,8 @@ GameObject:
   - component: {fileID: 455261813}
   - component: {fileID: 455261815}
   - component: {fileID: 455261816}
+  - component: {fileID: 455261817}
+  - component: {fileID: 455261818}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -300,6 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPrompt: answer any question
+  apiKey: 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
 --- !u!4 &455261814
 Transform:
   m_ObjectHideFlags: 0
@@ -343,6 +346,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 828952459}
   balloon: {fileID: 8278234621925646260}
+--- !u!114 &455261817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455261812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f5829a1a0844a8f8b0803471634003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openAIApiKey: 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
+  voiceName: alloy
+  testMessage: Hello
+  model: tts-1
+--- !u!114 &455261818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455261812}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 813c4cedb15f945e4917d6ca8cc70d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiKey: AIzaSyAtUYSvZZ49i-uuKyiIfEDdRTZ0-ygZ-jA
+  languageCode: en-US
+  voiceName: en-US-Wavenet-D
+  testMessage: Hello
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
