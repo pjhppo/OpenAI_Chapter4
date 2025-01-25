@@ -4,7 +4,6 @@ using System.Collections;
 using System.Text;
 using System;
 
-
 public class GoogleTextToSpeech : MonoBehaviour
 {
     [Header("Google Cloud Settings")]
@@ -15,7 +14,7 @@ public class GoogleTextToSpeech : MonoBehaviour
 
     private AudioSource audioSource;
 
-    void Start()
+    private void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
         
