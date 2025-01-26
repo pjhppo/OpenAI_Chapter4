@@ -1,25 +1,69 @@
-using System;
 using System.Collections;
 using System.IO;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class OpenAITextToSpeech : MonoBehaviour
 {
     [Header("OpenAI Settings")]
     [SerializeField] private string openAIApiKey = "YOUR_API_KEY_HERE";
-    [SerializeField] private string voiceName = "alloy";
-    [SerializeField] private string testMessage = "Today is a wonderful day to build something people love!";
-    [SerializeField] private string model = "tts-1";
+    [SerializeField] private string voiceName = "ash";
+    [SerializeField] private string model = "tts-1-hd";
+
+    [Header("UI Settings")]
+    [SerializeField] private InputField inputField;
+    [SerializeField] private TMP_Dropdown dropDownVoice;
+    [SerializeField] private TMP_Dropdown dropDownModel;
 
     private AudioSource audioSource;
 
     private void Start()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
+        if (inputField != null)
+        {
+            inputField.onEndEdit.AddListener(OnInputFieldSubmit);
+        }
 
-        StartCoroutine(GetAndPlayAudio(testMessage));
+        // Dropdown에 대한 이벤트 등록
+        if (dropDownVoice != null)
+        {
+            dropDownVoice.onValueChanged.AddListener(OnDropDownVoiceValueChanged);
+        }
+
+        if (dropDownModel != null)
+        {
+            dropDownModel.onValueChanged.AddListener(OnDropDownModelValueChanged);
+        }
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
+
+    // InputField에서 텍스트 입력 완료 시 호출
+    private void OnInputFieldSubmit(string message)
+    {
+        Debug.Log($"InputField 텍스트 입력 완료: {message}");
+        StartCoroutine(GetAndPlayAudio(message));
+    }
+
+    private void OnDropDownVoiceValueChanged(int index)
+    {
+        if (dropDownVoice != null && dropDownVoice.options.Count > index)
+        {
+            voiceName = dropDownVoice.options[index].text; // 선택된 옵션을 voiceName에 저장
+            Debug.Log($"Voice Dropdown 옵션 변경: {voiceName}");
+        }
+    }
+
+     private void OnDropDownModelValueChanged(int index)
+    {
+        if (dropDownModel != null && dropDownVoice.options.Count > index)
+        {
+            model = dropDownModel.options[index].text; // 선택된 옵션을 voiceName에 저장
+            Debug.Log($"Model Dropdown 옵션 변경: {model}");
+        }
     }
 
     IEnumerator GetAndPlayAudio(string textToSynthesize)
@@ -102,3 +146,4 @@ public class OpenAITextToSpeech : MonoBehaviour
         }
     }
 }
+
