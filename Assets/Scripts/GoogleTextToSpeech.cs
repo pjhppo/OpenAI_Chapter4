@@ -1,24 +1,126 @@
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using System.Collections;
 using System.Text;
 using System;
+using System.Collections.Generic;
 
 public class GoogleTextToSpeech : MonoBehaviour
 {
     [Header("Google Cloud Settings")]
     [SerializeField] private string apiKey = "구글 클라우드 API키 입력";
-    [SerializeField] private string languageCode = "en-US";
+    [SerializeField] private string languageCode = "ko-KR";
     [SerializeField] private string voiceName = "en-US-Wavenet-D"; // 원하는 보이스 이름
     [SerializeField] private string testMessage = "Today is a wonderful day to build something people love!";
+
+    [Header("UI Settings")]
+    [SerializeField] private Dropdown dropDownLanguage;
+    [SerializeField] private Dropdown dropDownModel;
+    [SerializeField] private InputField inputField;
 
     private AudioSource audioSource;
 
     private void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
-        
-         StartCoroutine(GetAndPlayAudio(testMessage));
+
+        // 드롭다운 초기화
+        InitializeDropDowns();
+
+        // 드롭다운 이벤트 리스너 추가
+        dropDownLanguage.onValueChanged.AddListener(OnLanguageChanged);
+        dropDownModel.onValueChanged.AddListener(OnVoiceChanged);
+
+        // 입력 필드 이벤트 리스너 추가
+        inputField.onEndEdit.AddListener(OnInputEndEdit);
+    }
+
+    // 드롭다운 초기화
+    private void InitializeDropDowns()
+    {
+        // 언어 드롭다운 초기화
+        dropDownLanguage.ClearOptions();
+        dropDownLanguage.AddOptions(new List<string> { "한국어", "영어", "중국어", "일본어" });
+
+        // 초기 언어에 따른 보이스 드롭다운 초기화
+        UpdateVoiceDropDown();
+    }
+
+    // 언어 드롭다운 변경 시 호출
+    private void OnLanguageChanged(int index)
+    {
+        switch (index)
+        {
+            case 0: // 한국어
+                languageCode = "ko-KR";
+                break;
+            case 1: // 영어
+                languageCode = "en-US";
+                break;
+            case 2: // 중국어
+                languageCode = "cmn-CN";
+                break;
+            case 3: // 일본어
+                languageCode = "ja-JP";
+                break;
+        }
+
+        // 보이스 드롭다운 업데이트
+        UpdateVoiceDropDown();
+    }
+
+    // 보이스 드롭다운 변경 시 호출
+    private void OnVoiceChanged(int index)
+    {
+        voiceName = dropDownModel.options[index].text;
+    }
+
+    // 입력 필드 입력 완료 시 호출
+    private void OnInputEndEdit(string text)
+    {
+        StartCoroutine(GetAndPlayAudio(text));
+    }
+
+    // 언어에 따른 보이스 드롭다운 업데이트
+    private void UpdateVoiceDropDown()
+    {
+        dropDownModel.ClearOptions();
+
+        switch (languageCode)
+        {
+            case "ko-KR": // 한국어
+                dropDownModel.AddOptions(new List<string>
+                {
+                    "ko-KR-Standard-A", "ko-KR-Standard-B", "ko-KR-Standard-C", "ko-KR-Standard-D",
+                    "ko-KR-Wavenet-A", "ko-KR-Wavenet-B", "ko-KR-Wavenet-C", "ko-KR-Wavenet-D"
+                });
+                break;
+            case "en-US": // 영어
+                dropDownModel.AddOptions(new List<string>
+                {
+                    "en-US-Standard-B", "en-US-Standard-C", "en-US-Standard-D", "en-US-Standard-E",
+                    "en-US-Wavenet-A", "en-US-Wavenet-B", "en-US-Wavenet-C", "en-US-Wavenet-D"
+                });
+                break;
+            case "cmn-CN": // 중국어
+                dropDownModel.AddOptions(new List<string>
+                {
+                    "cmn-CN-Standard-A", "cmn-CN-Standard-B", "cmn-CN-Standard-C", "cmn-CN-Standard-D",
+                    "cmn-CN-Wavenet-A", "cmn-CN-Wavenet-B", "cmn-CN-Wavenet-C", "cmn-CN-Wavenet-D"
+                });
+                break;
+            case "ja-JP": // 일본어
+                dropDownModel.AddOptions(new List<string>
+                {
+                    "ja-JP-Standard-A", "ja-JP-Standard-B", "ja-JP-Standard-C", "ja-JP-Standard-D",
+                    "ja-JP-Wavenet-A", "ja-JP-Wavenet-B", "ja-JP-Wavenet-C", "ja-JP-Wavenet-D"
+                });
+                break;
+        }
+
+        // 기본 보이스 선택
+        voiceName = dropDownModel.options[0].text;
     }
 
     // Google TTS API에 요청을 보내고, 응답받은 오디오(WAV 형식)를 재생하는 코루틴
@@ -28,8 +130,6 @@ public class GoogleTextToSpeech : MonoBehaviour
         string url = $"https://texttospeech.googleapis.com/v1/text:synthesize?key={apiKey}";
 
         // JSON 페이로드(문자열 직접 구성)
-        //   - 문자열 안에 큰따옴표 " 가 들어갈 수 있으므로 주의 (아래는 간단히 Replace로 처리)
-        //   - audioEncoding: LINEAR16, MP3, OGG_OPUS 등 원하는 형식 지정 가능
         string escapedText = textToSynthesize.Replace("\"", "\\\"");
         string jsonPayload = $@"
         {{
@@ -78,7 +178,6 @@ public class GoogleTextToSpeech : MonoBehaviour
     }
 
     // Google TTS 응답(JSON) 파싱용 클래스
-    // (이 부분은 계속 사용해도 되며, '직렬화 요청 바디' 클래스들과는 별개입니다.)
     [Serializable]
     private class GoogleTTSResponse
     {
