@@ -29,6 +29,11 @@ public class NPCManager : MonoBehaviour
 
         // InputField 이벤트 리스너 설정 - 입력 완료 시 실행되는 이벤트
         UIManager.Instance.inputField.onSubmit.AddListener(OnInputFieldSubmit);
+
+        OpenAITTS.Instance.onResponseTTS.AddListener(StartTalking);
+
+        OpenAITTS.Instance.OnStopAudio.AddListener(StopTalking);
+
     }
 
     // InputField에서 입력이 발생했을 때 호출되는 메서드
@@ -36,7 +41,6 @@ public class NPCManager : MonoBehaviour
     {
         // 애니메이터에 "listening" 트리거 설정
         anim.SetTrigger("listen");
-        Debug.Log("OnInputFieldEdited");
     }
 
     // InputField에서 입력이 완료되었을 때 호출되는 메서드    
@@ -45,15 +49,15 @@ public class NPCManager : MonoBehaviour
         balloon.SetActive(true);
     }
 
-    // 말풍선을 비활성화 하고, 5초 동안 "talk" 애니메이션 실행 후 "Idle" 애니메이션으로 전환하는 코루틴
-    public IEnumerator TalkThenIdle()
-    {
+    private void StartTalking(string message){
+        UIManager.Instance.resultText.gameObject.SetActive(true);
         balloon.SetActive(false);
-
         anim.SetTrigger("talk");
-
-        yield return new WaitForSeconds(5f);
-
-        anim.SetTrigger("idle");
     }
+
+    private void StopTalking(){
+        anim.SetTrigger("idle");
+        UIManager.Instance.resultText.gameObject.SetActive(false);
+    }
+
 }

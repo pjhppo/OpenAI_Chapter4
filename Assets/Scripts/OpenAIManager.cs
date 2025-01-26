@@ -1,21 +1,36 @@
-using System.Collections;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
-using System;
+using System.Collections;
 
 public class OpenAIManager : MonoBehaviour
 {
+    [Header("OpenAI 설정")]
+    public string apiKey = "YOUR_API_KEY";
+    [SerializeField] private string model = "gpt-4o-mini";
+
     public static OpenAIManager Instance;
 
-    public string currentPrompt = "answer any question";
-    private const string apiUrl = "https://api.openai.com/v1/chat/completions";
-    public string apiKey;
+    // 이벤트 정의
+    public StringEvent onResponseOpenAI;  // InputField 텍스트 완료 이벤트
 
-    //추가된 코드
-    public event Action<string> OnReceivedMessage;
+    // JSON 응답 핵심 데이터만 추출하는 단순 클래스
+    [System.Serializable]
+    private class SimpleResponse
+    {
+        [System.Serializable]
+        public class Choice
+        {
+            [System.Serializable]
+            public class Message
+            {
+                public string content;
+            }
+            public Message message;
+        }
+        public Choice[] choices;
+    }
 
+    // 싱글톤 선언
     private void Awake()
     {
         if (Instance == null)
@@ -28,85 +43,62 @@ public class OpenAIManager : MonoBehaviour
         }
     }
 
-    // OpenAI API에 요청을 보내는 코루틴 함수
-    public IEnumerator SendOpenAIRequest(string prompt, string message, Text resultText)
+    private void Start()
     {
-        // JSON 형식의 데이터를 생성
-        string jsonData = @"{
-            ""model"": ""gpt-4o"",
+        // 싱글톤 인스턴스를 통해 이벤트 구독
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.onInputFieldSubmit.AddListener(OnInputFieldCompleted);
+        }
+        else
+        {
+            Debug.LogError("UIManager 인스턴스가 없습니다.");
+        }
+    }
+
+    private void OnInputFieldCompleted(string message)
+    {
+        StartCoroutine(SendRequestToOpenAI(message));
+    }
+
+    private IEnumerator SendRequestToOpenAI(string message)
+    {
+        string url = "https://api.openai.com/v1/chat/completions";
+
+        // 요청 데이터 (직접 JSON 문자열 생성)
+        string jsonPayload = @"{
+            ""model"": """ + model + @""",
             ""messages"": [
-                {
-                    ""role"": ""system"",
-                    ""content"": """ + prompt + @"""
-                },
-                {
-                    ""role"": ""user"",
-                    ""content"": """ + message + @"""
-                }
-            ]
+                { ""role"": ""system"", ""content"": ""You are a helpful assistant. Answer questions concisely using only standard alphanumeric characters and basic punctuation (e.g., periods, commas). Avoid symbols, emojis, or markdown formatting to ensure compatibility with text-to-speech APIs."" },
+                { ""role"": ""user"", ""content"": """ + message + @""" }
+            ],
+            ""store"": false
         }";
 
-        // UTF-8 인코딩으로 JSON 데이터를 바이트 배열로 변환
-        byte[] postData = Encoding.UTF8.GetBytes(jsonData);
-
-        // UnityWebRequest를 사용하여 POST 요청을 생성
-        using (UnityWebRequest request = new UnityWebRequest(apiUrl, "POST"))
+        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
-            // 요청 헤더 설정
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Authorization", "Bearer " + apiKey);
-
-            // 요청 데이터 설정
-            request.uploadHandler = new UploadHandlerRaw(postData);
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Authorization", $"Bearer {apiKey}");
 
-            // 요청 전송
             yield return request.SendWebRequest();
 
-            // 에러 핸들링
-            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+            if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.LogError("Error: " + request.error);
+                // JsonUtility로 직접 파싱 (클래스 1개로 계층 구조 처리)
+                SimpleResponse response = JsonUtility.FromJson<SimpleResponse>(request.downloadHandler.text);
+                string responseMessage = response.choices[0].message.content;
+                onResponseOpenAI.Invoke(responseMessage); // 입력된 텍스트를 이벤트로 전달
+                Debug.Log("응답: " + responseMessage);
             }
             else
             {
-                // 응답 처리
-                string responseText = request.downloadHandler.text;
-                Debug.Log("Response: " + responseText);
-
-                // 응답 데이터에서 assistant의 메시지 추출
-                var responseData = JsonUtility.FromJson<OpenAIResponse>(responseText);
-                if (responseData.choices != null && responseData.choices.Length > 0)
-                {
-                    string assistantMessage = responseData.choices[0].message.content;
-                    resultText.text = assistantMessage;
-                    StartCoroutine(NPCManager.Instance.TalkThenIdle());
-                    
-                    OnReceivedMessage?.Invoke(assistantMessage);
-                }
-                else
-                {
-                    Debug.LogWarning("No valid response from the assistant.");
-                }
+                Debug.LogError("요청 실패: " + request.error);
             }
         }
     }
-}
 
-[System.Serializable]
-public class OpenAIResponse
-{
-    public Choice[] choices;
-}
 
-[System.Serializable]
-public class Choice
-{
-    public Message message;
-}
-
-[System.Serializable]
-public class Message
-{
-    public string content;
 }
