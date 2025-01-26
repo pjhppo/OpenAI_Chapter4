@@ -142,8 +142,8 @@ GameObject:
   - component: {fileID: 455261818}
   - component: {fileID: 455261813}
   - component: {fileID: 455261815}
-  - component: {fileID: 455261816}
   - component: {fileID: 455261817}
+  - component: {fileID: 455261816}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
