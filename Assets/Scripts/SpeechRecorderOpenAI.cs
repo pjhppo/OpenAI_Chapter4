@@ -13,7 +13,7 @@ public class SpeechRecorderOpenAI : MonoBehaviour
     [SerializeField] private string model = "tts-1";
 
     [Header("Record Settings")]
-    [SerializeField] private string SaveFolderName = "RecordResult";
+    [SerializeField] private string saveFolderName = "RecordResult";
 
     private AudioSource audioSource;
 
@@ -91,7 +91,7 @@ public class SpeechRecorderOpenAI : MonoBehaviour
     IEnumerator LoadAudioClipFromMp3Data(byte[] mp3Data, System.Action<AudioClip> callback)
     {
         // Assets/RecordResult/ 폴더 경로 생성
-        string folderPath = Path.Combine(Application.dataPath, SaveFolderName);
+        string folderPath = Path.Combine(Application.dataPath, saveFolderName);
 
         // 폴더가 없으면 생성
         if (!Directory.Exists(folderPath))

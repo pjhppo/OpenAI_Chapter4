@@ -11,6 +11,8 @@ public class SpeechRecorderGoogleTTS : MonoBehaviour
     [SerializeField] private string apiKey = "구글 클라우드 API키 입력";
     [SerializeField] private string languageCode = "ko-KR";
     [SerializeField] private string voiceName = "ko-KR-Wavenet-A"; // 원하는 보이스 이름
+    
+    [Header("Record Settings")]
     [SerializeField] private string saveFolderName = "RecordResult"; // 저장할 폴더 이름
 
     private AudioSource audioSource;
