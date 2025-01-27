@@ -5,6 +5,10 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class SpeechRecorderOpenAI : MonoBehaviour
 {
     [Header("OpenAI Settings")]
@@ -18,7 +22,7 @@ public class SpeechRecorderOpenAI : MonoBehaviour
     private AudioSource audioSource;
 
     private void Start()
-    {     
+    {
 
         // 싱글톤 인스턴스를 통해 이벤트 구독
         if (SpeechRecorderManager.Instance != null)
@@ -35,9 +39,10 @@ public class SpeechRecorderOpenAI : MonoBehaviour
 
     private void OnInputFieldCompleted(string message)
     {
-        if(SpeechRecorderManager.Instance.currentTTS == "Open AI TTS"){
+        if (SpeechRecorderManager.Instance.currentTTS == "Open AI TTS")
+        {
             StartCoroutine(GetAndPlayAudio(message));
-        }       
+        }
     }
 
     IEnumerator GetAndPlayAudio(string textToSynthesize)
@@ -110,6 +115,10 @@ public class SpeechRecorderOpenAI : MonoBehaviour
         File.WriteAllBytes(tempFilePath, mp3Data);
 
         Debug.Log($"오디오 파일이 저장되었습니다: {tempFilePath}");
+
+#if UNITY_EDITOR
+        AssetDatabase.Refresh();
+#endif
 
         // 파일에서 AudioClip 로드
         using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file://" + tempFilePath, AudioType.MPEG))

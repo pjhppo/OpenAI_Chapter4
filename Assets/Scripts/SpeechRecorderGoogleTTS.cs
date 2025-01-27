@@ -5,13 +5,17 @@ using System.Text;
 using System;
 using System.IO;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class SpeechRecorderGoogleTTS : MonoBehaviour
 {
     [Header("Google Cloud Settings")]
     [SerializeField] private string apiKey = "구글 클라우드 API키 입력";
     [SerializeField] private string languageCode = "ko-KR";
     [SerializeField] private string voiceName = "ko-KR-Wavenet-A"; // 원하는 보이스 이름
-    
+
     [Header("Record Settings")]
     [SerializeField] private string saveFolderName = "RecordResult"; // 저장할 폴더 이름
 
@@ -117,6 +121,10 @@ public class SpeechRecorderGoogleTTS : MonoBehaviour
         // 파일 저장
         File.WriteAllBytes(filePath, audioData);
         Debug.Log($"오디오 파일이 저장되었습니다: {filePath}");
+
+#if UNITY_EDITOR
+        AssetDatabase.Refresh();
+#endif
 
         return filePath;
     }
