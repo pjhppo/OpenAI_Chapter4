@@ -53,11 +53,11 @@ public class NPCManager : MonoBehaviour
     private void OnInputFieldSubmit(string inputText)
     {
         balloon.SetActive(true);
+        isListening = false;
     }
 
     private void StartTalking(string message)
-    {
-        isListening = false;
+    {        
         UIManager.Instance.resultText.gameObject.SetActive(true);
         balloon.SetActive(false);
         anim.SetTrigger("talk");
