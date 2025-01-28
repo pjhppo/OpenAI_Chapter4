@@ -7,6 +7,8 @@ public class NPCManager : MonoBehaviour
 
     public GameObject balloon; //말풍선 프리팹
 
+    private bool isListening = false;
+
     private void Awake()
     {
         // 싱글톤 패턴 구현
@@ -38,8 +40,13 @@ public class NPCManager : MonoBehaviour
     // InputField에서 입력이 발생했을 때 호출되는 메서드
     private void OnInputFieldChanged(string inputText)
     {
-        // 애니메이터에 "listening" 트리거 설정
-        anim.SetTrigger("listen");
+        if (!isListening)
+        {
+            // 애니메이터에 "listening" 트리거 설정
+            anim.SetTrigger("listen");
+            isListening = true; // 플래그 설정
+            Debug.Log("Animator Triggered: listen");
+        }
     }
 
     // InputField에서 입력이 완료되었을 때 호출되는 메서드    
@@ -48,13 +55,16 @@ public class NPCManager : MonoBehaviour
         balloon.SetActive(true);
     }
 
-    private void StartTalking(string message){
+    private void StartTalking(string message)
+    {
+        isListening = false;
         UIManager.Instance.resultText.gameObject.SetActive(true);
         balloon.SetActive(false);
         anim.SetTrigger("talk");
     }
 
-    private void StopTalking(){
+    private void StopTalking()
+    {
         anim.SetTrigger("idle");
         UIManager.Instance.resultText.gameObject.SetActive(false);
     }
