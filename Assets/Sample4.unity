@@ -119,17 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &331611130 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 482781281575924151, guid: 049c03afed5df4faaa5b1ae94c2eafbf, type: 3}
-  m_PrefabInstance: {fileID: 3610924439150966698}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &455261812
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,10 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 455261814}
   - component: {fileID: 455261818}
-  - component: {fileID: 455261813}
-  - component: {fileID: 455261815}
-  - component: {fileID: 455261817}
-  - component: {fileID: 455261816}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -151,23 +136,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &455261813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 455261812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76d34e8ad20949f1a5c3f5c0e966c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  apiKey: 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
-  model: gpt-4o-mini
-  onResponseOpenAI:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &455261814
 Transform:
   m_ObjectHideFlags: 0
@@ -183,57 +151,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &455261815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 455261812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253fb75242a5f413195282d05489b74c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputField: {fileID: 331611130}
-  resultText: {fileID: 1546691857}
-  onInputFieldSubmit:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &455261816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 455261812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afa508e9a523a4e5b8d56c86963c074e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 828952459}
-  balloon: {fileID: 8278234621925646260}
---- !u!114 &455261817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 455261812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f5829a1a0844a8f8b0803471634003, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  voiceName: alloy
-  model: tts-1
-  onResponseTTS:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStopAudio:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!82 &455261818
 AudioSource:
   m_ObjectHideFlags: 0
@@ -485,11 +402,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
---- !u!95 &828952459 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5615815007780928290, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
-  m_PrefabInstance: {fileID: 828952458}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,17 +494,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1546691857 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 935181365712130301, guid: 049c03afed5df4faaa5b1ae94c2eafbf, type: 3}
-  m_PrefabInstance: {fileID: 3610924439150966698}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3610924439150966698
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -751,11 +652,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f6b7a9aeece64607914fcf0c226d5fa, type: 3}
---- !u!1 &8278234621925646260 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6589287061218459658, guid: 8f6b7a9aeece64607914fcf0c226d5fa, type: 3}
-  m_PrefabInstance: {fileID: 8278234621925646259}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

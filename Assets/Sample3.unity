@@ -128,7 +128,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 307017976}
-  - component: {fileID: 307017975}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -136,24 +135,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &307017975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307017974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 370e5a04822404fc58e049d396b0907e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputField: {fileID: 1073435004}
-  dropDown: {fileID: 617922525}
-  currentTTS: 
-  onInputFieldSubmit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &307017976
 Transform:
   m_ObjectHideFlags: 0
@@ -179,7 +160,6 @@ GameObject:
   m_Component:
   - component: {fileID: 455261814}
   - component: {fileID: 455261816}
-  - component: {fileID: 455261815}
   m_Layer: 0
   m_Name: Managers_OpenAI
   m_TagString: Untagged
@@ -202,22 +182,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &455261815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 455261812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58795eb9d05dd4d3c931d41821564140, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  openAIApiKey: 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
-  voiceName: alloy
-  model: tts-1
-  saveFolderName: RecordResult
 --- !u!82 &455261816
 AudioSource:
   m_ObjectHideFlags: 0
@@ -315,17 +279,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &617922525 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6195294704926994081, guid: 390dfe877c56b47f6909d2637981aacb, type: 3}
-  m_PrefabInstance: {fileID: 1319694558031378494}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,17 +468,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1073435004 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1763432804384542936, guid: 390dfe877c56b47f6909d2637981aacb, type: 3}
-  m_PrefabInstance: {fileID: 1319694558031378494}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1830428710
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +478,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1830428713}
   - component: {fileID: 1830428712}
-  - component: {fileID: 1830428711}
   m_Layer: 0
   m_Name: Managers_GoogleTTS
   m_TagString: Untagged
@@ -544,22 +485,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1830428711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1830428710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 858e7ea0504784574b249930d30f967d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  apiKey: AIzaSyAtUYSvZZ49i-uuKyiIfEDdRTZ0-ygZ-jA
-  languageCode: ko-KR
-  voiceName: ko-KR-Wavenet-A
-  saveFolderName: RecordResult
 --- !u!82 &1830428712
 AudioSource:
   m_ObjectHideFlags: 0

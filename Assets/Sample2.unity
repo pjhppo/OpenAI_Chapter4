@@ -129,7 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 71665361}
   - component: {fileID: 71665360}
-  - component: {fileID: 71665362}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -249,25 +248,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &71665362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 71665358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22abe33053c724176bd414df4b411d16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  apiKey: AIzaSyAtUYSvZZ49i-uuKyiIfEDdRTZ0-ygZ-jA
-  languageCode: ko-KR
-  voiceName: en-US-Wavenet-D
-  testMessage: Today is a wonderful day to build something people love!
-  dropDownLanguage: {fileID: 811451414}
-  dropDownModel: {fileID: 811451413}
-  inputField: {fileID: 811451415}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,39 +450,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e786e746f8da24d8d8d6275b0a2ecd2e, type: 3}
---- !u!114 &811451413 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9215334256204173187, guid: e786e746f8da24d8d8d6275b0a2ecd2e, type: 3}
-  m_PrefabInstance: {fileID: 811451412}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d0b652f32a2cc243917e4028fa0f046, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &811451414 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8079901743650694662, guid: e786e746f8da24d8d8d6275b0a2ecd2e, type: 3}
-  m_PrefabInstance: {fileID: 811451412}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d0b652f32a2cc243917e4028fa0f046, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &811451415 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1763432804384542936, guid: e786e746f8da24d8d8d6275b0a2ecd2e, type: 3}
-  m_PrefabInstance: {fileID: 811451412}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
