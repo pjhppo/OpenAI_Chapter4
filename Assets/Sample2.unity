@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22abe33053c724176bd414df4b411d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiKey: AIzaSyAtUYSvZZ49i-uuKyiIfEDdRTZ0-ygZ-jA
+  apiKey: YOUR_API_KEY_HERE
   languageCode: ko-KR
   voiceName: en-US-Wavenet-D
   testMessage: Today is a wonderful day to build something people love!
