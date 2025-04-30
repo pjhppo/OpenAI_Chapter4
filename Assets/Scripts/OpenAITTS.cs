@@ -51,7 +51,21 @@ public class OpenAITTS : MonoBehaviour
 
     private void OnResponseOpenAI(string message)
     {
-        StartCoroutine(GetAndPlayAudio(message));
+        string safeText = EscapeForJson(message);
+
+        StartCoroutine(GetAndPlayAudio(safeText));
+    }
+
+    private string EscapeForJson(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return s;
+        return s
+            .Replace("\\", "\\\\")   // 역슬래시
+            .Replace("\"", "\\\"")   // 큰따옴표
+            .Replace("\n", "\\n")    // 줄바꿈
+            .Replace("\r", "\\r")    // 캐리지 리턴
+            .Replace("\t", "\\t");   // 탭
     }
 
     private IEnumerator GetAndPlayAudio(string textToSynthesize)
